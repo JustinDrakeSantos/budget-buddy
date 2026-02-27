@@ -3,10 +3,15 @@ from datetime import datetime
 from flask import Flask, render_template, jsonify, request
 from pymongo import MongoClient
 from bson.objectid import ObjectId
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 
-MONGODB_URI = 'mongodb+srv://justinksantos130_db_user:MBIBP3VvnHAbjVU4@budget-buddy-db.c7p73yq.mongodb.net/?appName=budget-buddy-db'
+MONGODB_URI = os.environ.get("MONGODB_URI")
+if not MONGODB_URI:
+    raise RuntimeError("MONGODB_URI not set")
 
 client = MongoClient(MONGODB_URI)
 
