@@ -4,6 +4,7 @@ from flask import Flask, render_template, jsonify, request
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
+from urllib.parse import urlparse
 
 load_dotenv()
 
@@ -14,6 +15,15 @@ if not MONGODB_URI:
     raise RuntimeError("MONGODB_URI not set")
 
 client = MongoClient(MONGODB_URI)
+
+uri = os.environ.get("MONGODB_URI") or os.environ.get("MONGO_URI") or ""
+p = urlparse(uri)
+print("MONGO scheme:", p.scheme)
+print("MONGO host:", p.hostname)
+print("MONGO db:", p.path)
+print("MONGO has_user:", bool(p.username))
+print("MONGO has_pass:", p.password is not None)
+print("MONGO query:", p.query)
 
 db = client['budget-buddy-db']
 
