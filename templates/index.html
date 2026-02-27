@@ -439,13 +439,40 @@ input:focus, select:focus, button:focus{
   }
 
   #expenses-list{
-    max-height:240px; /* keep a sensible cap */
+    max-height: 38vh;      /* was 240px — too small for some screens */
+    overflow-y: auto;
+  }
+
+  /* Make the outer containers just layout wrappers on mobile */
+  .spending-tracker,
+  .budget-percentage{
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    padding: 0;
+  }
+
+  /* Add spacing between the inner cards */
+  .spending-tracker{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .expense-container{
+    flex: 0 0 auto;   /* don't force weird flex stretching on mobile */
+    min-height: auto;
   }
 }
 
 /* Phones */
 @media (max-width: 480px){
-  body{ padding:14px; }
+  body{
+    padding-top: calc(14px + env(safe-area-inset-top));
+    padding-bottom: calc(14px + env(safe-area-inset-bottom));
+    padding-left:  max(14px, env(safe-area-inset-left));
+    padding-right: max(14px, env(safe-area-inset-right));
+  }
   h1{ font-size:22px; margin-bottom:16px; }
 
   section, .budget-percentage, .spending-tracker{
@@ -475,6 +502,11 @@ input:focus, select:focus, button:focus{
   #expenses-list li .expense-right{
     width:100%;
     justify-content:space-between;
+  }
+
+  #expenses-list{
+    max-height: 38vh;      /* was 240px — too small for some screens */
+    overflow-y: auto;
   }
 }
     </style>
